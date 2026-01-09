@@ -3,6 +3,11 @@ from pydantic import BaseModel
 from datetime import datetime, timedelta, timezone
 from jose import jwt
 import hashlib # Standard Python library, no 72-byte limit bug!
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -16,7 +21,7 @@ def verify_password(plain_password: str, hashed_password: str):
 
 # 2. DATABASE & SETTINGS
 users_db = {}
-SECRET_KEY = "MY_SUPER_SECRET_KEY"
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 
 class UserSchema(BaseModel):
